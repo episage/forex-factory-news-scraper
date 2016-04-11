@@ -68,10 +68,9 @@ public class ParseStringAndSave {
         String[] elements = inputString.split("</td>");
 
         String line;
-        String dateString, hourString0, country, impact, event;
+        String dateString, hourString0, country, event;
         String hourString = "";
         int impactDigit;
-        Pattern p;
         Matcher m, m1, m2;
         boolean m1Found, m2Found;
         boolean emptyTime, noSpecificTime;
