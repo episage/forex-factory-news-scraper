@@ -15,7 +15,6 @@ import java.util.Scanner;
  * @author Nicolas11 @ BMT
  */
 public class Main {
-
     final private static int FOREX_FACTORY_FIRST_YEAR_2007 = 2007; // v.5.1
     final private static SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
     //
@@ -32,7 +31,7 @@ public class Main {
     private static int numberOfMonthsOfHistoricalDataToDownload;
 
     private static int step1_nbMonthsToDownloadForFutureEconomicEvents() {
-        return 2;
+        return 3;
     }
 
     private static int step2_nbMonthsToDownloadForHistoricalEconomicEvents(GUIFrame frame) throws FileNotFoundException {
@@ -90,24 +89,20 @@ public class Main {
         frame.printlnInHistoricalEconomicEventsTextArea("Date of the last event of the file is: " + sdf.format(lastDate.getTime()));
         // last date == yesterday?
         if ((lastDate.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR)) && (lastDate.get(Calendar.MONTH) == yesterday.get(Calendar.MONTH)) && (lastDate.get(Calendar.DAY_OF_MONTH) == yesterday.get(Calendar.DAY_OF_MONTH))) {
-
             // ****
             // ** HISTORICAL FILE ALREADY EXISTS AND IS UP TO DATE
             // ****
-
             frame.printlnInHistoricalEconomicEventsTextArea("This date is the date of yesterday. The file is up to date.");
             numberOfMonthsOfHistoricalDataToDownload = 0;
-
         } else {
-
             // ****
             // ** HISTORICAL FILE ALREADY EXISTS BUT SHALL BE COMPLETED
             // ****
-
             numberOfMonthsOfHistoricalDataToDownload = (yearOfYesterday - yearOfLastDate) * 12
                     + (monthOfYesterday - monthOfLastDate)
                     + 1;
         }
+
         return numberOfMonthsOfHistoricalDataToDownload;
     }
 

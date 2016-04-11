@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
  * @ BMT
  */
 public class ParseStringAndSave {
-
     final private static int HOUR_OFFSET = 0; // compared to GMT-5 (=6 pour GMT+1)
     final private static Pattern DATE_PATTERN = Pattern.compile(">([\\w\\s]*)</span>");
     //final private static Pattern HOUR_PATTERN_1 = Pattern.compile("center\\\">([\\w\\s:-]*)</td>");
@@ -66,7 +65,6 @@ public class ParseStringAndSave {
      * @throws Exception ... in case of problem in parsing
      */
     public static void parseStringAndSaveToFile(String inputString, FileWriter eventsCsvFileWriter, int yearOfFile, int monthOfFile, int firstDayOfMonthToBeConsidered, int lastDayOfMonthToBeConsidered) throws IOException, Exception {
-
         String[] elements = inputString.split("</td>");
 
         String line;
@@ -91,17 +89,16 @@ public class ParseStringAndSave {
 
         int index = 0;
         while (index < elements.length) {
-
             /*if (!elements[index].contains("eventid")) {
                 index++;
                 continue;
             }*/
             // 2016 Apr fixes
             if (!elements[index].contains("data-eventid") ||
-            	(elements[index].contains("calendar__row") && (
-        			elements[index].contains("calendar__details") ||
-        			elements[index].contains("calendar__expand")
-            	))
+                (elements[index].contains("calendar__row") && (
+                    elements[index].contains("calendar__details") ||
+                    elements[index].contains("calendar__expand")
+                ))
             ) {
                 index++;
                 continue;
@@ -121,7 +118,7 @@ public class ParseStringAndSave {
                     monthAndDayGc.setTime(MonthAndDayDate);
                     month = monthAndDayGc.get(Calendar.MONTH);
                     day = monthAndDayGc.get(Calendar.DAY_OF_MONTH);
-                    currentDate = "" + (yearOfFile - 1900) + DATE_FORMAT_OUT.format(MonthAndDayDate);
+                    currentDate = "" + yearOfFile + DATE_FORMAT_OUT.format(MonthAndDayDate);
                 } else {
                     throw new ParseException("Problem for identification of date in: " + line, 0);
                 }
@@ -164,10 +161,10 @@ public class ParseStringAndSave {
                         minute = hourGc.get(Calendar.MINUTE);
                         fullDateGc.set(yearOfFile, month, day, hour, minute);
                         fullDateGc.add(Calendar.HOUR_OF_DAY, HOUR_OFFSET);
-                        currentDate = "" + (yearOfFile - 1900) + DATE_FORMAT_OUT.format(fullDateGc.getTime());
+                        currentDate = "" + yearOfFile + DATE_FORMAT_OUT.format(fullDateGc.getTime());
                         hourString = HOUR_FORMAT_OUT.format(fullDateGc.getTime());
                     } else {
-                        currentDate = "" + (yearOfFile - 1900) + DATE_FORMAT_OUT.format(MonthAndDayDate);
+                        currentDate = "" + yearOfFile + DATE_FORMAT_OUT.format(MonthAndDayDate);
                         // otherwise, we could have gone to the day after due to an offset in the previous field, whereas the previous field was at the same date
                         continue;
                     }

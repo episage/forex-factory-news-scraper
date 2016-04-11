@@ -81,7 +81,6 @@ public class DownloadToString {
      * @throws IOException in case of problem in the downloading of the Web page
      */
     public static String downloadOneMonthToString(final int year, final int month) throws IOException {
-
         InputStream is = null;
 
         try {
