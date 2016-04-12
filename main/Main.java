@@ -31,7 +31,7 @@ public class Main {
     private static int numberOfMonthsOfHistoricalDataToDownload;
 
     private static int step1_nbMonthsToDownloadForFutureEconomicEvents() {
-        return 3;
+        return 2;
     }
 
     private static int step2_nbMonthsToDownloadForHistoricalEconomicEvents(GUIFrame frame) throws FileNotFoundException {
@@ -81,10 +81,10 @@ public class Main {
             return step2_fillNewHistoricalFile(frame);
         }
 
-        String lastDateAsString = lastLine.substring(0, 7);
-        yearOfLastDate = Integer.parseInt(lastDateAsString.substring(0, 3)) + 1900;
-        monthOfLastDate = Integer.parseInt(lastDateAsString.substring(3, 5));
-        dayOfLastDate = Integer.parseInt(lastDateAsString.substring(5, 7));
+        String lastDateAsString = lastLine.substring(0, 10);
+        yearOfLastDate = Integer.parseInt(lastDateAsString.substring(0, 4));
+        monthOfLastDate = Integer.parseInt(lastDateAsString.substring(5, 7));
+        dayOfLastDate = Integer.parseInt(lastDateAsString.substring(8, 10));
         GregorianCalendar lastDate = new GregorianCalendar(yearOfLastDate, monthOfLastDate - 1, dayOfLastDate);
         frame.printlnInHistoricalEconomicEventsTextArea("Date of the last event of the file is: " + sdf.format(lastDate.getTime()));
         // last date == yesterday?

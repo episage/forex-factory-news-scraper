@@ -33,9 +33,9 @@ public class ParseStringAndSave {
     // final private static Pattern EVENT_PATTERN = Pattern.compile(">([\\w\\s\\.\\*&;(),/-]*)</div>");
     final private static Pattern EVENT_PATTERN = Pattern.compile(">([\\w\\s\\.\\*&;(),/-]*)</span>");
     final private static DateFormat DATE_FORMAT_IN = new SimpleDateFormat("yyyy MMM d", Locale.ENGLISH);
-    final private static DateFormat DATE_FORMAT_OUT = new SimpleDateFormat("MMdd");
+    final private static DateFormat DATE_FORMAT_OUT = new SimpleDateFormat(".MM.dd");
     final private static DateFormat HOUR_FORMAT_IN = new SimpleDateFormat("h:mma");
-    final private static DateFormat HOUR_FORMAT_OUT = new SimpleDateFormat("HHmm");
+    final private static DateFormat HOUR_FORMAT_OUT = new SimpleDateFormat("HH:mm");
     //
     private static String currentDate;
 
@@ -70,7 +70,7 @@ public class ParseStringAndSave {
         String line;
         String dateString, hourString0, country, event;
         String hourString = "";
-        int impactDigit;
+        String impact;
         Matcher m, m1, m2;
         boolean m1Found, m2Found;
         boolean emptyTime, noSpecificTime;
@@ -105,7 +105,7 @@ public class ParseStringAndSave {
 
             // We have a new event...
 
-            // Element with new possible new date; otherwise, same date as before 
+            // Element with new possible new date; otherwise, same date as before
             //
             line = elements[index];
             if (containsDayOfWeek(line)) { // it is a new date
@@ -191,18 +191,18 @@ public class ParseStringAndSave {
 
             index++;
             // Element with importance
-            // 
+            //
             if (elements[index].contains("High")) {
-                impactDigit = 3;
+                impact = "H";
             } else if (elements[index].contains("Medium")) {
-                impactDigit = 2;
+                impact = "M";
             } else if (elements[index].contains("Low")) {
-                impactDigit = 1;
+                impact = "L";
             } else {
-                impactDigit = 0;
+                impact = "-";
             }
             if (Constants.VERBOSE) {
-                System.out.println("Importance: " + impactDigit + " ** " + elements[index]);
+                System.out.println("Importance: " + impact + " ** " + elements[index]);
             }
 
             index++;
@@ -220,14 +220,13 @@ public class ParseStringAndSave {
                 System.out.println("Title: " + event + " ** " + elements[index]);
             }
 
-            if (noSpecificTime) {
+            if (noSpecificTime || event.equals("") || country.equals("")) {
                 // nothing to do
             } else {
-                outputLine = currentDate
-                        + "," + hourString
-                        + "," + impactDigit
-                        + "," + country
-                        + "," + event
+                outputLine = currentDate + " " + hourString
+                        + ";" + country
+                        + ";" + impact
+                        + ";" + event
                         + System.getProperty("line.separator");
                 int dayOfMonth = Integer.parseInt(currentDate.substring(currentDate.length() - 2));
                 if ((firstDayOfMonthToBeConsidered <= dayOfMonth) && (dayOfMonth <= lastDayOfMonthToBeConsidered)) {
