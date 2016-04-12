@@ -126,9 +126,6 @@ public class Main {
         // this month:
         frame.printlnInFutureEconomicEventsTextArea("[1/2] Download, parse and store Forex Factory economic events for the current month (" + currentMonth + "/" + yearOfCurrentMonth + ")...");
         String currentMonthWebPage = DownloadToString.downloadOneMonthToString(yearOfCurrentMonth, currentMonth);
-FileWriter friter = new FileWriter("dump.html");
-friter.write(currentMonthWebPage, 0, currentMonthWebPage.length());
-friter.close();
         ParseStringAndSave.parseStringAndSaveToFile(currentMonthWebPage, futureEconomicEventsCsvFileWriter, yearOfCurrentMonth, currentMonth, 1, 31);
         frame.setProgressBarValue(++progressCounter);
         // next month:
