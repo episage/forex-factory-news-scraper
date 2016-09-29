@@ -1,4 +1,4 @@
-To run this scaper
+To run this scraper
 ====================
 
 - `chmod a+x build.sh`
